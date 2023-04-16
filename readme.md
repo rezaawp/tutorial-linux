@@ -27,7 +27,7 @@ Pada perintah chmod -R 777, 777 adalah kombinasi dari tiga mode akses, yaitu rea
 Untuk membatasi hak akses kembali, maka perintah chmod -R o-rwx akan menghapus hak akses (read, write, dan execute) dari semua orang (others) pada seluruh file dan direktori yang ada di dalam folder tersebut. Perintah o digunakan untuk menunjukkan hak akses pada others (lainnya), sedangkan r, w, dan x menunjukkan read, write, dan execute.
 
 
-## install aplikasi dengan file ekstensi .deb
+## install aplikasi yang file ekstensi nya .deb
 ```
 sudo dpkg -i ./namafile.deb
 ```
