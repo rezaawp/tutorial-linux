@@ -33,3 +33,16 @@ sudo dpkg -i ./namafile.deb
 ```
 
 Perintah diatas, untuk install aplikasi
+
+## error : `Wrong permissions on configuration file, should not be world writable!` di phpmyadmin
+
+This error message indicates that the configuration file for your local phpMyAdmin installation has incorrect permissions. Specifically, the file has permissions that allow anyone on the system to write to it, which can be a security risk.
+
+To resolve this issue, you should change the permissions on the configuration file to ensure that it is not world-writable. You can do this by running the following command in the terminal:
+
+```
+chmod 644 /path/to/phpmyadmin/config.inc.php
+```
+This will set the permissions on the configuration file to be readable and writable by the owner of the file, and readable by everyone else. This is a common set of permissions for configuration files on a Linux system.
+
+Once you have changed the permissions on the configuration file, you should try accessing phpMyAdmin again to ensure that the error message no longer appears. If you continue to experience issues, you may need to check other file permissions or configuration settings to ensure that your phpMyAdmin installation is properly configured.
