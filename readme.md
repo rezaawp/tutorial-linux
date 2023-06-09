@@ -46,3 +46,31 @@ chmod 644 /path/to/phpmyadmin/config.inc.php
 This will set the permissions on the configuration file to be readable and writable by the owner of the file, and readable by everyone else. This is a common set of permissions for configuration files on a Linux system.
 
 Once you have changed the permissions on the configuration file, you should try accessing phpMyAdmin again to ensure that the error message no longer appears. If you continue to experience issues, you may need to check other file permissions or configuration settings to ensure that your phpMyAdmin installation is properly configured.
+
+## GPG ENCRYPT FILE OR FOLDER
+Encrypting a directory using a symmetric key involves using a single key to both encrypt and decrypt the data. This key is known as the "symmetric key" and should be kept secret as anyone who has access to it can decrypt the data.
+
+One way to encrypt a directory using a symmetric key in Linux is by using the "tar" and "gpg" utilities together.
+
+### ENC
+First, use the "tar" command to create an archive of the directory you want to encrypt. For example
+```
+tar -cvf directory.tar /path/to/directory
+```
+Then, use the "gpg" command to encrypt the tar archive using a symmetric key. For example
+```
+gpg --symmetric --cipher-algo AES256 directory.tar
+```
+
+
+## DEC
+This will prompt you to enter and verify a passphrase, which will be used as the symmetric key.
+
+To decrypt the directory, you would first use the "gpg" command to decrypt the archive using the symmetric key
+```
+gpg --decrypt directory.tar.gpg > directory.tar
+```
+Then, use the "tar" command to extract the files from the decrypted archive
+```
+tar -xvf directory.tar
+```
