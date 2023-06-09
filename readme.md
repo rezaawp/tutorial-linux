@@ -63,7 +63,7 @@ gpg --symmetric --cipher-algo AES256 directory.tar
 ```
 
 
-## DEC
+### DEC
 This will prompt you to enter and verify a passphrase, which will be used as the symmetric key.
 
 To decrypt the directory, you would first use the "gpg" command to decrypt the archive using the symmetric key
@@ -73,4 +73,22 @@ gpg --decrypt directory.tar.gpg > directory.tar
 Then, use the "tar" command to extract the files from the decrypted archive
 ```
 tar -xvf directory.tar
+```
+
+atau bisa baca dokumentasi : https://www.gnupg.org/gph/en/manual/x110.html
+
+### Passphrase
+Passphrase adalah kata sandi yang digunakan dalam kriptografi untuk melindungi akses terhadap data yang dienkripsi atau kunci privat yang digunakan dalam proses enkripsi. Ini adalah kata atau frasa rahasia yang harus dimasukkan oleh pengguna untuk mengakses atau mendekripsi data yang terlindungi.
+
+Perbedaan utama antara passphrase dan kata sandi (password) biasa terletak pada panjang dan kompleksitasnya. Passphrase biasanya lebih panjang, terdiri dari beberapa kata yang digabungkan menjadi satu frasa. Ini bertujuan untuk meningkatkan keamanan dengan menciptakan kombinasi karakter yang lebih kompleks.
+
+Passphrase sering digunakan dalam kriptografi untuk mengamankan berbagai hal, seperti enkripsi file, enkripsi email, kunci privat dalam sistem keamanan, atau akses ke jaringan yang terlindungi.
+
+Penting untuk memilih passphrase yang kuat dan sulit ditebak oleh orang lain. Rekomendasi umum adalah menggunakan kombinasi kata-kata yang tidak terkait secara logis, termasuk huruf besar dan kecil, angka, dan karakter khusus. Hal ini akan membuat passphrase lebih sulit ditebak dengan serangan pencobaan kata sandi (brute-force) atau serangan kamus (dictionary attack).
+
+Ingatlah untuk menjaga kerahasiaan passphrase Anda dan tidak membagikannya dengan orang lain. Passphrase yang kuat dan dirahasiakan dengan baik adalah komponen kunci dalam menjaga keamanan data yang terenkripsi.
+
+#### Menghapus Cache GPG supaya diminta untuk memasukan password ketika mau decrypt
+```
+gpgconf --reload gpg-agent
 ```
