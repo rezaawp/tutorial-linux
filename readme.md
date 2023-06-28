@@ -92,3 +92,8 @@ Ingatlah untuk menjaga kerahasiaan passphrase Anda dan tidak membagikannya denga
 ```
 gpgconf --reload gpg-agent
 ```
+
+## Kill running port 
+```
+sudo kill -9 `sudo lsof -t -i:9001`
+```
