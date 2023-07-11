@@ -97,3 +97,8 @@ gpgconf --reload gpg-agent
 ```
 sudo kill -9 `sudo lsof -t -i:9001`
 ```
+
+## Show current directory
+```
+pwd
+```
