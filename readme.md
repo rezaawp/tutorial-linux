@@ -112,3 +112,9 @@ cat /proc/meminfo
 ```
 df -h
 ```
+
+- df -h – shows the result in a human-readable format.
+- df -m – displays file system usage information in MB.
+- df -k – tells users the file system usage in KB.
+- df -T – specifies the file system type in a new column.
+- df /home – allows you to view information about a specific file system in a readable format. In this example, it’s the /home file system.
