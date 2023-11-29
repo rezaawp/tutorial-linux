@@ -107,3 +107,8 @@ pwd
 ```
 cat /proc/meminfo
 ```
+
+## melihat detail storage
+```
+df -h
+```
