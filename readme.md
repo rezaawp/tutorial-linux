@@ -102,3 +102,8 @@ sudo kill -9 `sudo lsof -t -i:9001`
 ```
 pwd
 ```
+
+## melihat detail memeory
+```
+cat /proc/meminfo
+```
