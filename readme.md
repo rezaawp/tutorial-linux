@@ -120,3 +120,6 @@ df -h
 - df /home – allows you to view information about a specific file system in a readable format. In this example, it’s the /home file system.
 
 src : https://www.hostinger.com/tutorials/vps/how-to-check-and-manage-disk-space-via-terminal
+
+## reverse proxy dan membuat service :
+- https://www.atlantic.net/dedicated-server-hosting/how-to-configure-reverse-proxy-for-node-js-application-using-apache-on-ubuntu/
