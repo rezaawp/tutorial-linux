@@ -123,3 +123,4 @@ src : https://www.hostinger.com/tutorials/vps/how-to-check-and-manage-disk-space
 
 ## reverse proxy dan membuat service :
 - https://www.atlantic.net/dedicated-server-hosting/how-to-configure-reverse-proxy-for-node-js-application-using-apache-on-ubuntu/
+- ``` client -> server -> nginx -> apache ``` 
