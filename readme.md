@@ -123,4 +123,8 @@ src : https://www.hostinger.com/tutorials/vps/how-to-check-and-manage-disk-space
 
 ## reverse proxy dan membuat service :
 - https://www.atlantic.net/dedicated-server-hosting/how-to-configure-reverse-proxy-for-node-js-application-using-apache-on-ubuntu/
-- ``` client -> server -> nginx -> apache ``` 
+- ``` client -> server -> nginx -> apache ```
+- tujuan reverse proxy diatas : intinya webserver utama tetap apache
+fungsi nginx hanya menerima request dari public // alasan reverse ada di kecepatan load sih
+kalo make apache doang agak lambet // kenapa di reverse proxy?
+apache ga sekuat nginx di spam request
