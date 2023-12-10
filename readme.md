@@ -128,3 +128,8 @@ src : https://www.hostinger.com/tutorials/vps/how-to-check-and-manage-disk-space
 fungsi nginx hanya menerima request dari public // alasan reverse ada di kecepatan load sih
 kalo make apache doang agak lambet // kenapa di reverse proxy?
 apache ga sekuat nginx di spam request
+
+## install extension php sesuai dengan versi php
+contohnya gue mau install extension untuk `xml` di versi php 8.3 berarti gini :
+``` sudo apt install php8.3-mysql ```
+- 8.3 diatas disesuikan dengan versi php
