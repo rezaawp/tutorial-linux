@@ -131,6 +131,6 @@ apache ga sekuat nginx di spam request
 
 ## install extension php sesuai dengan versi php
 contohnya gue mau install extension untuk `xml` di versi php 8.3 berarti gini :
-``` sudo apt install php8.3-mysql ```
+``` sudo apt install php8.3-xml ```
 - 8.3 diatas disesuikan dengan versi php
 - directory php ada di `/usr/` atau di `/etc/`
