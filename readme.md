@@ -133,3 +133,4 @@ apache ga sekuat nginx di spam request
 contohnya gue mau install extension untuk `xml` di versi php 8.3 berarti gini :
 ``` sudo apt install php8.3-mysql ```
 - 8.3 diatas disesuikan dengan versi php
+- directory php ada di `/usr/` atau di `/etc/`
