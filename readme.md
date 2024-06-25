@@ -142,6 +142,7 @@ contohnya gue mau install extension untuk `xml` di versi php 8.3 berarti gini :
 ## Deploy pakai nginx
 - directory default ada di ```/etc/nginx/```
 - ```sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/```
+- ```sudo systemctl restart nginx```
 
 ## Reverse proxy
 ```
