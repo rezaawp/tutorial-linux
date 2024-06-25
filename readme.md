@@ -139,6 +139,10 @@ contohnya gue mau install extension untuk `xml` di versi php 8.3 berarti gini :
 ## Compress video
 - https://gist.github.com/lukehedger/277d136f68b028e22bed
 
+## Deploy pakai nginx
+- directory default ada di ```/etc/nginx/```
+- ```sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/```
+
 ## Reverse proxy
 ```
 server {
