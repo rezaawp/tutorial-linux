@@ -129,6 +129,11 @@ fungsi nginx hanya menerima request dari public // alasan reverse ada di kecepat
 kalo make apache doang agak lambet // kenapa di reverse proxy?
 apache ga sekuat nginx di spam request
 
+## PPA php
+Perintah ```sudo add-apt-repository ppa:ondrej/php``` digunakan untuk menambahkan Personal Package Archive (PPA) yang dikelola oleh Ondřej Surý ke dalam sistem Anda. Ondřej Surý adalah pengelola PPA yang menyediakan berbagai versi PHP dan ekstensi terkait untuk distribusi Linux berbasis Debian dan Ubuntu.
+- ```sudo add-apt-repository ppa:ondrej/php```
+- ```sudo apt update```
+
 ## install extension php sesuai dengan versi php
 contohnya gue mau install extension untuk `xml` di versi php 8.3 berarti gini :
 ``` sudo apt install php8.3-xml ```
