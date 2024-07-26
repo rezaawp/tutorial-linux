@@ -139,6 +139,7 @@ contohnya gue mau install extension untuk `xml` di versi php 8.3 berarti gini :
 ``` sudo apt install php8.3-xml ```
 - 8.3 diatas disesuikan dengan versi php
 - directory php ada di `/usr/` atau di `/etc/`
+- ```php -m | grep fileinfo``` mengecek fileinfo extension apakah sudah terinstall atau belum
 
 
 ## Compress video
