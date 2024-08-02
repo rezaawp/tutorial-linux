@@ -211,4 +211,5 @@ server {
 }
 ```
 - Setiap client yang mengakses file .php ke server harus membutuhkan FPM PHP !
-- SSL Gratis bisa menggunakan `certbot` 
+- SSL Gratis bisa menggunakan `certbot`
+- Jangan lupa pakai FPM
