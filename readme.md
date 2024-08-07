@@ -213,3 +213,6 @@ server {
 - Setiap client yang mengakses file .php ke server harus membutuhkan FPM PHP !
 - SSL Gratis bisa menggunakan `certbot`
 - Jangan lupa pakai FPM
+
+## Keluar TTY Linux
+Distribusi Berbeda, TTY Berbeda: Beberapa distribusi Linux mungkin menggunakan TTY yang berbeda untuk sesi GUI. Misalnya, beberapa distribusi modern mungkin menjalankan sesi GUI di TTY1, TTY2, atau TTY3. Dalam kasus tersebut, Anda mungkin perlu mencoba Ctrl + Alt + F1, Ctrl + Alt + F2, atau Ctrl + Alt + F3
