@@ -215,5 +215,26 @@ server {
 - SSL Gratis bisa menggunakan `certbot`
 - Jangan lupa pakai FPM
 
+## ipv6 dan ipv4
+Website yang di-deploy dengan hanya menggunakan IPv6 tidak dapat diakses langsung oleh pengguna yang hanya memiliki konektivitas IPv4. Ini disebabkan oleh perbedaan protokol antara IPv4 dan IPv6, di mana keduanya tidak saling kompatibel secara langsung.
+
+### **Penjelasan:**
+
+- **IPv4 dan IPv6**: IPv4 dan IPv6 adalah dua protokol yang berbeda untuk alamat IP. IPv4 menggunakan alamat 32-bit (misalnya, 192.0.2.1), sedangkan IPv6 menggunakan alamat 128-bit (misalnya, 2001:0db8:85a3:0000:0000:8a2e:0370:7334).
+- **Kompatibilitas**: Pengguna yang hanya memiliki koneksi IPv4 tidak dapat mengakses situs yang hanya memiliki alamat IPv6, dan sebaliknya, tanpa mekanisme tambahan.
+
+### **Solusi untuk Mengatasi Keterbatasan:**
+
+1. **Dual-Stack**: Cara yang paling umum adalah dengan mengaktifkan **dual-stack** pada server web Anda. Dengan dual-stack, server Anda akan memiliki alamat IPv4 dan IPv6, sehingga bisa diakses oleh pengguna yang menggunakan kedua protokol ini.
+   
+   - **Cara Kerja**: Ketika pengguna mengakses website Anda, DNS akan memberikan alamat IPv4 (A record) atau IPv6 (AAAA record) tergantung pada protokol yang didukung oleh perangkat pengguna. Ini memastikan bahwa semua pengguna dapat mengakses website Anda, terlepas dari apakah mereka menggunakan IPv4 atau IPv6.
+
+2. **IPv6-to-IPv4 Gateway**: Jika Anda hanya memiliki alamat IPv6 tetapi ingin melayani pengguna IPv4, Anda dapat menggunakan gateway atau proxy yang melakukan translasi antara IPv6 dan IPv4. Layanan seperti ini disediakan oleh beberapa CDN (Content Delivery Network) atau bisa diimplementasikan di infrastruktur Anda sendiri.
+
+3. **Tunneling**: Beberapa teknologi tunneling dapat digunakan untuk mengizinkan lalu lintas IPv4 mengakses sumber daya IPv6 atau sebaliknya, namun ini lebih rumit dan biasanya tidak digunakan sebagai solusi utama.
+
+### **Kesimpulan:**
+Untuk memastikan website Anda dapat diakses oleh pengguna yang menggunakan IPv4 dan IPv6, Anda sebaiknya menggunakan konfigurasi dual-stack di server Anda. Ini akan memungkinkan pengguna dari kedua protokol untuk mengakses situs Anda tanpa masalah kompatibilitas.
+
 ## Keluar TTY Linux
 Distribusi Berbeda, TTY Berbeda: Beberapa distribusi Linux mungkin menggunakan TTY yang berbeda untuk sesi GUI. Misalnya, beberapa distribusi modern mungkin menjalankan sesi GUI di TTY1, TTY2, atau TTY3. Dalam kasus tersebut, Anda mungkin perlu mencoba Ctrl + Alt + F1, Ctrl + Alt + F2, atau Ctrl + Alt + F3
