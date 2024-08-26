@@ -238,3 +238,111 @@ Untuk memastikan website Anda dapat diakses oleh pengguna yang menggunakan IPv4 
 
 ## Keluar TTY Linux
 Distribusi Berbeda, TTY Berbeda: Beberapa distribusi Linux mungkin menggunakan TTY yang berbeda untuk sesi GUI. Misalnya, beberapa distribusi modern mungkin menjalankan sesi GUI di TTY1, TTY2, atau TTY3. Dalam kasus tersebut, Anda mungkin perlu mencoba Ctrl + Alt + F1, Ctrl + Alt + F2, atau Ctrl + Alt + F3
+
+## NGINX PHP
+```
+server
+{
+    listen 8080;
+    listen [::]:8080;
+    server_name 123.456.7.8;
+    index index.php index.html index.htm default.php default.htm default.html;
+    root /var/www/tes;
+
+    #SSL-START SSL related configuration, do NOT delete or modify the next line of commented-out 404 rules
+    #error_page 404/404.html;
+    #SSL-END
+
+    #ERROR-PAGE-START  Error page configuration, allowed to be commented, deleted or modified
+    error_page 404 /404.html;
+    error_page 502 /502.html;
+    #ERROR-PAGE-END
+
+    #PHP-INFO-START  PHP reference configuration, allowed to be commented, deleted or modified
+    # include enable-php-82.conf;
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+    #PHP-INFO-END
+
+    #REWRITE-START URL rewrite rule reference, any modification will invalidate the rewrite rules set by the panel
+    # include /www/server/panel/vhost/rewrite/tes.com.conf;
+    #REWRITE-END
+
+    # Forbidden files or directories
+    location ~ ^/(\.user.ini|\.htaccess|\.git|\.env|\.svn|\.project|LICENSE|README.md)
+    {
+        return 404;
+    }
+
+    # Directory verification related settings for one-click application for SSL certificate
+    location ~ \.well-known{
+        allow all;
+    }
+
+    #Prohibit putting sensitive files in certificate verification directory
+    if ( $uri ~ "^/\.well-known/.*\.(php|jsp|py|js|css|lua|ts|go|zip|tar\.gz|rar|7z|sql|bak)$" ) {
+        return 403;
+    }
+
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+    {
+        expires      30d;
+        error_log /dev/null;
+        access_log /dev/null;
+    }
+
+    location ~ .*\.(js|css)?$
+    {
+        expires      12h;
+        error_log /dev/null;
+        access_log /dev/null; 
+    }
+    access_log  /www/wwwlogs/koperasi.com.log;
+    error_log  /www/wwwlogs/koperasi.com.error.log;
+}
+```
+
+## Reverse Proxy
+```
+server {
+  listen 8080;
+  listen [::]:8080;
+  server_name 123.4.5.6;
+
+  location / {
+    proxy_pass             http://localhost:8080;
+      # proxy_set_header Host $host;
+      #   proxy_set_header X-Real-IP $remote_addr;
+      #   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      #   proxy_set_header X-Forwarded-Proto $scheme;
+      
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header REMOTE-HOST $remote_addr;
+    add_header X-Cache $upstream_cache_status;
+    
+    proxy_connect_timeout 30s;
+    proxy_read_timeout     60;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    # proxy_cache_bypass $http_upgrade;
+  
+    # location /api/tps_images/ {
+    #     alias /www/wwwroot/bot/wa_bot_polling_tps;
+    # }
+    # proxy_connect_timeout  60;
+    # proxy_redirect         off;
+
+    # Allow the use of websockets
+  }
+  
+}
+```
+
+## Rewrite template
+- https://github.com/aaPanel/aaPanel/tree/master/rewrite/nginx
