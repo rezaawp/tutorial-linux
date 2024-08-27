@@ -346,3 +346,50 @@ server {
 
 ## Rewrite template
 - https://github.com/aaPanel/aaPanel/tree/master/rewrite/nginx
+
+## Virtualisasi
+
+### Proxmox
+
+Ya, Proxmox adalah platform virtualisasi open-source yang memungkinkan Anda untuk mengelola mesin virtual dan container. Ini adalah distribusi Linux berbasis Debian yang menyediakan antarmuka web untuk mengelola virtualisasi KVM (Kernel-based Virtual Machine) untuk mesin virtual, serta LXC (Linux Containers) untuk container.
+
+Berikut adalah beberapa fitur utama Proxmox:
+
+1. **Virtualisasi dan Container**: Proxmox mendukung KVM untuk virtualisasi penuh dan LXC untuk container ringan, memungkinkan Anda untuk menjalankan berbagai jenis sistem operasi dan aplikasi dalam satu host fisik.
+
+2. **Manajemen Berbasis Web**: Proxmox menyediakan antarmuka pengguna berbasis web yang memungkinkan Anda mengelola seluruh infrastruktur virtual Anda dari satu tempat, termasuk penciptaan, penghapusan, dan pengelolaan mesin virtual serta container.
+
+3. **Cluster dan Replikasi**: Proxmox mendukung clustering, yang memungkinkan beberapa server fisik dikelola sebagai satu kesatuan. Ini juga menyediakan fitur replikasi data untuk redundansi dan pemulihan bencana.
+
+4. **Penyimpanan Terpadu**: Proxmox mendukung berbagai opsi penyimpanan seperti ZFS, Ceph, NFS, iSCSI, dan lainnya, memungkinkan integrasi mudah dengan sistem penyimpanan yang ada.
+
+5. **Backup dan Pemulihan**: Proxmox menawarkan alat untuk backup dan pemulihan, termasuk snapshot dan backup berbasis jadwal.
+
+6. **Jaringan Virtual**: Anda dapat mengkonfigurasi jaringan virtual, VLAN, dan mengelola routing jaringan untuk mesin virtual dan container.
+
+Proxmox banyak digunakan dalam lingkungan data center, server rumah, dan aplikasi pengujian karena fleksibilitas, skalabilitas, dan biaya operasional yang rendah.
+
+### Qemu
+QEMU (Quick Emulator) adalah sebuah perangkat lunak open-source yang menyediakan emulasi dan virtualisasi hardware. Di Linux, QEMU digunakan untuk menjalankan sistem operasi dan aplikasi dalam lingkungan virtual yang diisolasi. Berikut beberapa poin penting mengenai QEMU:
+
+### 1. **Fungsi Utama QEMU**:
+   - **Emulasi**: QEMU dapat mengemulasi berbagai arsitektur CPU (seperti x86, ARM, SPARC, dan lainnya), memungkinkan Anda menjalankan sistem operasi yang berbeda dari arsitektur fisik yang digunakan oleh host. Ini berarti Anda bisa menjalankan sistem operasi ARM pada host x86, misalnya.
+   - **Virtualisasi**: Dengan menggunakan teknologi virtualisasi seperti KVM (Kernel-based Virtual Machine), QEMU dapat menjalankan mesin virtual dengan performa hampir mendekati perangkat keras asli, karena instruksi dijalankan langsung pada CPU host jika memungkinkan.
+
+### 2. **Mode Kerja QEMU**:
+   - **Full Emulation Mode**: Semua perangkat keras (CPU, memori, perangkat I/O) diemulasi oleh QEMU. Ini berguna untuk tujuan pengembangan dan pengujian, terutama saat mengembangkan software untuk arsitektur yang berbeda.
+   - **User-mode Emulation**: QEMU dapat menjalankan program Linux yang dikompilasi untuk arsitektur lain, dengan mengemulasi panggilan sistem dan instruksi CPU tertentu.
+   - **Virtualization (KVM)**: QEMU bekerja bersama dengan KVM untuk memberikan virtualisasi yang hampir native. Ini hanya bisa digunakan pada prosesor yang mendukung virtualisasi hardware (seperti Intel VT atau AMD-V).
+
+### 3. **Fitur QEMU**:
+   - **Snapshot**: Kemampuan untuk mengambil snapshot dari keadaan sistem virtual, sehingga Anda bisa kembali ke titik waktu sebelumnya jika diperlukan.
+   - **Disk Image Formats**: Mendukung berbagai format gambar disk, seperti QCOW2, RAW, VMDK, dan lainnya.
+   - **Network Emulation**: QEMU menyediakan berbagai opsi jaringan virtual, seperti bridging, NAT, dan lainnya, untuk menghubungkan mesin virtual dengan jaringan eksternal.
+   - **Live Migration**: Memungkinkan migrasi mesin virtual dari satu host ke host lain tanpa downtime, yang sangat berguna dalam lingkungan produksi.
+
+### 4. **Penggunaan Umum QEMU**:
+   - **Pengembangan dan Pengujian**: Pengembang dapat menggunakan QEMU untuk menguji aplikasi pada berbagai sistem operasi dan arsitektur tanpa memerlukan perangkat keras fisik untuk setiap platform.
+   - **Server Virtualisasi**: Digunakan dalam lingkungan server untuk menjalankan beberapa sistem operasi secara simultan pada satu perangkat keras fisik, mengoptimalkan penggunaan sumber daya.
+   - **Emulasi Hardware Lama**: Dapat digunakan untuk menjalankan software lama yang memerlukan arsitektur yang tidak lagi didukung oleh perangkat keras modern.
+
+QEMU sering digunakan bersama dengan proyek open-source lainnya seperti Libvirt (untuk manajemen virtualisasi), KVM (untuk akselerasi virtualisasi), dan Proxmox (seperti yang disebutkan sebelumnya) untuk membangun solusi virtualisasi yang kuat dan fleksibel.
