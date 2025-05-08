@@ -393,3 +393,120 @@ QEMU (Quick Emulator) adalah sebuah perangkat lunak open-source yang menyediakan
    - **Emulasi Hardware Lama**: Dapat digunakan untuk menjalankan software lama yang memerlukan arsitektur yang tidak lagi didukung oleh perangkat keras modern.
 
 QEMU sering digunakan bersama dengan proyek open-source lainnya seperti Libvirt (untuk manajemen virtualisasi), KVM (untuk akselerasi virtualisasi), dan Proxmox (seperti yang disebutkan sebelumnya) untuk membangun solusi virtualisasi yang kuat dan fleksibel.
+
+# Konfigurasi Project Website di Ubuntu dengan Nginx
+Untuk menambahkan konfigurasi baru di Nginx di Linux lokal dan memungkinkan setiap proyek menggunakan domain masing-masing (hanya untuk lingkungan lokal), kamu bisa mengikuti langkah-langkah berikut:
+
+### 1. **Menambahkan Domain ke `hosts`**
+
+Langkah pertama adalah menambahkan domain ke file `hosts` agar bisa mengarah ke IP lokal (`127.0.0.1`).
+
+1. Edit file `/etc/hosts` menggunakan editor teks favorit kamu, misalnya `nano`:
+
+   ```bash
+   sudo nano /etc/hosts
+   ```
+
+2. Tambahkan entri berikut di akhir file, di mana `myproject.local` adalah domain yang ingin kamu gunakan:
+
+   ```
+   127.0.0.1   myproject.local
+   ```
+
+3. Simpan dan keluar dari editor.
+
+### 2. **Membuat Konfigurasi Nginx untuk Proyek**
+
+Setelah itu, buat konfigurasi Nginx untuk proyek kamu. Misalnya, jika kamu ingin menggunakan domain `myproject.local` untuk proyek di direktori tertentu.
+
+1. Arahkan ke direktori konfigurasi Nginx, biasanya di `/etc/nginx/sites-available/`:
+
+   ```bash
+   cd /etc/nginx/sites-available/
+   ```
+
+2. Buat file konfigurasi baru untuk proyek kamu, misalnya `myproject.local`:
+
+   ```bash
+   sudo nano myproject.local
+   ```
+
+3. Tambahkan konfigurasi berikut (sesuaikan dengan direktori proyek kamu):
+
+   ```nginx
+   server {
+       listen 80;
+       server_name myproject.local;
+
+       root /path/to/your/project/public;  # Ganti dengan path ke folder public proyek kamu
+       index index.php index.html index.htm;
+
+       location / {
+           try_files $uri $uri/ /index.php?$query_string;
+       }
+
+       location ~ \.php$ {
+           include snippets/fastcgi-php.conf;
+           fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;  # Sesuaikan dengan versi PHP yang kamu pakai
+           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+           include fastcgi_params;
+       }
+
+       location ~ /\.ht {
+           deny all;
+       }
+   }
+   ```
+
+4. Simpan dan keluar dari editor.
+
+### 3. **Mengaktifkan Konfigurasi Nginx**
+
+Untuk mengaktifkan konfigurasi yang telah kamu buat, buat symlink dari file konfigurasi yang ada di `sites-available` ke direktori `sites-enabled`.
+
+1. Buat symlink:
+
+   ```bash
+   sudo ln -s /etc/nginx/sites-available/myproject.local /etc/nginx/sites-enabled/
+   ```
+
+2. Cek apakah konfigurasi Nginx sudah benar:
+
+   ```bash
+   sudo nginx -t
+   ```
+
+3. Jika tidak ada error, restart Nginx untuk menerapkan perubahan:
+
+   ```bash
+   sudo systemctl restart nginx
+   ```
+
+### 4. **Akses Proyek Melalui Domain Lokal**
+
+Sekarang, kamu bisa mengakses proyek kamu melalui domain yang telah ditambahkan, misalnya `myproject.local`.
+
+Cukup buka browser dan masukkan URL `http://myproject.local` untuk melihat apakah proyek kamu berjalan di lokal dengan domain tersebut.
+
+### 5. **Pengaturan untuk Beberapa Proyek**
+
+Jika kamu memiliki banyak proyek, kamu cukup menambahkan entri di `/etc/hosts` untuk setiap domain lokal dan membuat file konfigurasi terpisah di `/etc/nginx/sites-available/` untuk setiap proyek.
+
+Contoh untuk beberapa proyek:
+
+* Di `/etc/hosts`:
+
+  ```
+  127.0.0.1   project1.local
+  127.0.0.1   project2.local
+  ```
+
+* Di `/etc/nginx/sites-available/`:
+
+  * `project1.local` (mengarah ke folder `/path/to/project1/public`)
+  * `project2.local` (mengarah ke folder `/path/to/project2/public`)
+
+Lalu, pastikan kamu membuat symlink untuk masing-masing dan restart Nginx.
+
+Itu saja! Kamu kini bisa menggunakan domain lokal untuk setiap proyek di server Nginx di mesin Linux lokal kamu.
+
