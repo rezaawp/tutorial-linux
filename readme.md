@@ -510,3 +510,79 @@ Lalu, pastikan kamu membuat symlink untuk masing-masing dan restart Nginx.
 
 Itu saja! Kamu kini bisa menggunakan domain lokal untuk setiap proyek di server Nginx di mesin Linux lokal kamu.
 
+### Melihat permission di linux
+```stat -c "%A %a %n" *```
+
+---
+
+# 1️⃣ **Prinsip Umum**
+
+1. **Minimal privilege** → jangan kasih permission lebih dari yang dibutuhkan.
+2. **Folder executable** hanya jika benar-benar perlu (`chmod +x`).
+3. **File sensitif** (config, credential) harus **hanya bisa dibaca oleh owner**.
+4. **Web server user** (misal `www-data` di Ubuntu) harus punya akses untuk **read/write di folder yang memang butuh** (upload, cache, storage).
+
+---
+
+# 2️⃣ **Contoh Struktur Umum Laravel / Web App**
+
+```
+/var/www/project/
+├─ app/
+├─ bootstrap/
+├─ config/
+├─ database/
+├─ public/
+├─ storage/
+├─ vendor/
+└─ ...
+```
+
+---
+
+# 3️⃣ **Permission yang disarankan**
+
+| Folder / File                               | Owner / Group        | Permission | Keterangan                                         |
+| ------------------------------------------- | -------------------- | ---------- | -------------------------------------------------- |
+| Semua folder kode                           | deploy_user:www-data | 755        | owner bisa rwx, group + others bisa read & execute |
+| Semua file kode                             | deploy_user:www-data | 644        | owner rw, group & others read                      |
+| `storage/` & `bootstrap/cache`              | deploy_user:www-data | 775        | folder harus writable oleh web server              |
+| File config sensitif (`.env`)               | deploy_user:www-data | 640        | hanya owner bisa baca/write, group bisa baca       |
+| Public assets (`public/`)                   | deploy_user:www-data | 755        | bisa diakses web server                            |
+| Scripts executable (`artisan`, `deploy.sh`) | deploy_user          | 755        | bisa dijalankan                                    |
+
+> **Note:** `deploy_user` = user yang digunakan untuk deploy (bukan `root`)
+> `www-data` = user web server (Apache/Nginx)
+
+---
+
+# 4️⃣ **Cara Set Permission Contoh**
+
+```bash
+# Owner dan group
+sudo chown -R deploy_user:www-data /var/www/project
+
+# Folder kode
+find /var/www/project -type d -exec chmod 755 {} \;
+
+# File kode
+find /var/www/project -type f -exec chmod 644 {} \;
+
+# Storage dan cache harus writable
+chmod -R 775 /var/www/project/storage /var/www/project/bootstrap/cache
+
+# File env sensitif
+chmod 640 /var/www/project/.env
+```
+
+---
+
+# 5️⃣ **Tips Tambahan**
+
+* Jangan pernah chmod 777 kecuali **darurat**, karena semua user bisa tulis.
+* Gunakan **ACL** jika perlu akses lebih granular (`setfacl`)
+* Jangan jalankan web server sebagai root.
+* Setelah deploy, cek dengan `ls -l` untuk memastikan permission sudah benar.
+
+---
+
