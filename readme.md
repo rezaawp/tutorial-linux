@@ -586,3 +586,102 @@ chmod 640 /var/www/project/.env
 
 ---
 
+Untuk mengaktifkan **HTTPS dengan Certbot + Nginx** untuk domain
+`filemanager.paperwork.id`, kamu bisa menjalankan perintah berikut:
+
+---
+
+# ✅ **Perintah Certbot untuk Nginx**
+
+### **1. Install Certbot (jika belum ada)**
+
+Ubuntu/Debian:
+
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+```
+
+---
+
+### **2. Generate SSL untuk domain `filemanager.paperwork.id`**
+
+```bash
+sudo certbot --nginx -d filemanager.paperwork.id
+```
+
+Certbot akan:
+
+* Mengecek server Nginx
+* Mendeteksi server block domain tersebut
+* Menambahkan konfigurasi SSL otomatis
+* Meminta email dan persetujuan ToS
+* Membuat sertifikat
+* Reload Nginx otomatis
+
+---
+
+# 🔧 Jika Nginx Server Block Belum Ada
+
+Pastikan kamu punya file konfigurasi Nginx:
+
+```bash
+sudo nano /etc/nginx/sites-available/filemanager.paperwork.id
+```
+
+Isi minimal:
+
+```nginx
+server {
+    listen 80;
+    server_name filemanager.paperwork.id;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;  # filebrowser default port
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+Enable site:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/filemanager.paperwork.id /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+Setelah itu jalankan:
+
+```bash
+sudo certbot --nginx -d filemanager.paperwork.id
+```
+
+---
+
+# 🔄 Auto Renew (default dari Certbot)
+
+Cek:
+
+```bash
+sudo systemctl status certbot.timer
+```
+
+Test manual:
+
+```bash
+sudo certbot renew --dry-run
+```
+
+---
+
+Kalau kamu mau, saya bisa bantu:
+
+✅ konfigurasi Nginx lengkap untuk FileBrowser
+✅ reverse proxy + SSL otomatis
+✅ redirect HTTP → HTTPS
+
+Tinggal bilang saja!
+
