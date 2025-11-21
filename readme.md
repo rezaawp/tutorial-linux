@@ -685,3 +685,5 @@ Kalau kamu mau, saya bisa bantu:
 
 Tinggal bilang saja!
 
+## Deteksi log nginx
+https://goaccess.io/download
