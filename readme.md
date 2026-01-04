@@ -687,3 +687,6 @@ Tinggal bilang saja!
 
 ## Deteksi log nginx
 https://goaccess.io/download
+
+## Disk Usage linux
+`sudo du -h --max-depth=1`
