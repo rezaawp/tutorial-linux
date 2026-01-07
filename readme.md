@@ -690,3 +690,125 @@ https://goaccess.io/download
 
 ## Disk Usage linux
 `sudo du -h --max-depth=1`
+
+Oke, ini jadi **jelas banget** 👍
+Kalau **site user = `freepanel-pos`**, berarti **PHP / web server berjalan sebagai user itu** (atau minimal group-nya itu).
+
+Sekarang kita luruskan dan kasih **command yang tepat, aman, dan final**.
+
+---
+
+## 1️⃣ Pastikan dulu user PHP-FPM
+
+Cek cepat (opsional tapi bagus):
+
+```bash
+ps aux | grep php-fpm
+```
+
+Kalau kamu lihat:
+
+```
+freepanel-pos   1234  ...
+```
+
+➡️ berarti benar, PHP jalan sebagai **`freepanel-pos`**
+
+---
+
+## 2️⃣ Command `chown` yang BENAR untuk kasus kamu
+
+### ✅ Paling aman & sederhana
+
+```bash
+sudo chown -R freepanel-pos:freepanel-pos storage bootstrap/cache
+```
+
+Ini artinya:
+
+* Owner = `freepanel-pos`
+* Group = `freepanel-pos`
+* PHP **punya full hak write**
+
+---
+
+## 3️⃣ Set permission yang tepat (BUKAN 777)
+
+```bash
+sudo chmod -R 775 storage bootstrap/cache
+```
+
+---
+
+## 4️⃣ WAJIB: setgid supaya log harian tidak error lagi
+
+Ini penting karena Laravel bikin file log **SETIAP HARI** 👇
+
+```bash
+sudo chmod g+s storage storage/logs bootstrap/cache
+```
+
+Cek hasilnya:
+
+```bash
+ls -ld storage/logs
+```
+
+Harus ada huruf `s`:
+
+```
+drwxrwsr-x freepanel-pos freepanel-pos storage/logs
+```
+
+---
+
+## 5️⃣ Test tanpa sudo (validasi)
+
+```bash
+sudo -u freepanel-pos touch storage/logs/test.log
+```
+
+Kalau **tidak error** → 100% solved ✅
+
+---
+
+## 6️⃣ Kalau sebelumnya 777 “berhasil”, ini alasannya
+
+* `freepanel-pos` **bukan owner**
+* `freepanel-pos` **bukan group**
+* `775` gagal
+* `777` lolos karena semua boleh write
+
+Sekarang setelah `chown`, **775 sudah cukup**
+
+---
+
+## 7️⃣ Rangkuman final (copy–paste)
+
+Kalau mau **langsung beres**:
+
+```bash
+sudo chown -R freepanel-pos:freepanel-pos storage bootstrap/cache
+sudo chmod -R 775 storage bootstrap/cache
+sudo chmod g+s storage storage/logs bootstrap/cache
+```
+
+---
+
+## 8️⃣ Catatan penting (best practice)
+
+* ❌ Jangan pakai `777` di production
+* ✅ `chown` selalu lebih penting dari `chmod`
+* ✅ Laravel + log harian **butuh setgid**
+
+---
+
+Kalau masih error setelah ini, kirimkan:
+
+```bash
+ls -ld storage storage/logs bootstrap/cache
+ps aux | grep php-fpm
+```
+
+Aku bantu cek sampai **benar-benar bersih** 🔥
+
