@@ -812,3 +812,5 @@ ps aux | grep php-fpm
 
 Aku bantu cek sampai **benar-benar bersih** 🔥
 
+Cek static memory:
+ `top -o %MEM -bn1 | head -n 20`
