@@ -814,3 +814,6 @@ Aku bantu cek sampai **benar-benar bersih** 🔥
 
 Cek static memory:
  `top -o %MEM -bn1 | head -n 20`
+
+ ## Lokasi default service supervisor linux
+ `/etc/supervisor/conf.d/php-fpm.conf`
